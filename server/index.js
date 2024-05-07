@@ -19,9 +19,9 @@ app.use(express.static('public'));
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-// mongoose.connect('mongodb://mongo-db/Image', {
-     mongoose.connect('mongodb://localhost:27017/Image', {
+//   mongoose.connect('mongodb://localhost:27017/Image'
+ mongoose.connect('mongodb://mongo-db/Image', {
+    
     serverSelectionTimeoutMS: 30000, // 30 seconds
 }).then(() => {
     console.log("DB Connected");
