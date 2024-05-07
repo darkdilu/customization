@@ -20,7 +20,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 //   mongoose.connect('mongodb://localhost:27017/Image'
- mongoose.connect('mongodb://mongo-db/Image', {
+ mongoose.connect('mongodb://mongo-db1', {
     
     serverSelectionTimeoutMS: 30000, // 30 seconds
 }).then(() => {
