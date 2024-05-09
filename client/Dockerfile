@@ -5,6 +5,9 @@ WORKDIR /app
 
 COPY package.json package-lock.json ./
 
+# Increase memory limit for Node.js
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+
 RUN npm install
 
 COPY . .

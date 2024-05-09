@@ -8,11 +8,11 @@ import { useGLTF, useTexture } from '@react-three/drei'
 
 export default function Model(props) {
 
-
+{/* 
   let textureprops = useTexture({
     map: polyster,
 })
-
+*/}
 
 
   const { nodes, materials } = useGLTF('/shirt_model1.glb')
@@ -31,7 +31,7 @@ export default function Model(props) {
       {/*  back peice */}
       <mesh geometry={nodes.Cloth_mesh_8.geometry} material={materials['Cotton_Heavy_Canvas_349049.001']} >
 
-      <meshStandardMaterial {...textureprops} />
+   
         </mesh>
       
       
