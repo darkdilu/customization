@@ -4,13 +4,27 @@ Command: npx gltfjsx@6.2.16 poncho.glb
 */
 
 import React, { useEffect, useRef, useState } from 'react'
-import { useGLTF, useTexture } from '@react-three/drei'
+import { OrbitControls, useGLTF, useTexture } from '@react-three/drei'
 import polyster from './second_design.jpg';
 import axios from 'axios';
 import { Buffer } from 'buffer';
+import { useFrame } from '@react-three/fiber';
 
 export default function Model(props) {
 
+  const groupRef = useRef();
+
+ {/* useFrame(({ clock }) => {
+    const time = clock.getElapsedTime();
+
+    if (time % 20 >= 0 && time % 20 < 10) {
+     
+      groupRef.current.rotation.y = time * 0.7;
+    } else {
+      
+      groupRef.current.rotation.y = 0;
+    }
+  }); */}
 
 
   const[iamge_backend,setBackend_image]=useState()
@@ -74,7 +88,9 @@ const selected_part=props.part_selected
 
   const { nodes, materials } = useGLTF('/poncho.glb')
   return (
-    <group {...props} dispose={null}>
+    
+    <group  ref={groupRef}  {...props} dispose={null}>
+
       <mesh geometry={nodes.Cloth_mesh.geometry} material={materials.Rib_2X2_468gsm_263076} />
 
       {/* head mesh */}

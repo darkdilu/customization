@@ -8,8 +8,19 @@ import { Decal, useGLTF, useTexture } from '@react-three/drei'
 
 import goku from './goku.jpg'
 
-
+import { useFrame } from '@react-three/fiber';
 export default function Model(props) {
+
+  const meshRef = useRef();
+
+
+ useFrame(() => {
+    if (meshRef.current) {
+      meshRef.current.rotation.y += 0.05;
+    }
+  });
+ 
+
 
 
 let texture=useTexture(goku)
@@ -18,6 +29,8 @@ let texture=useTexture(goku)
   const { nodes, materials } = useGLTF('/leander_6_model.glb')
   return (
     <group {...props} dispose={null}>
+<mesh   ref={meshRef}>
+
       <mesh geometry={nodes.T_Shirt_Front.geometry} material={materials.Front_Shader_1} />
       <mesh geometry={nodes.T_Shirt_Back.geometry} material={materials.Back_Shader_2} />
       <mesh geometry={nodes.T_Shirt_Decal_Front1.geometry} material={materials.Decal_shader} position={[0, 0, 0.001]} />
@@ -55,6 +68,8 @@ let texture=useTexture(goku)
       <mesh geometry={nodes.polySurface6.geometry} material={materials.lambert2} />
       <mesh geometry={nodes.polySurface7.geometry} material={materials.lambert2} />
       <mesh geometry={nodes.polySurface9.geometry} material={materials.lambert2} />
+      </mesh>
+
     </group>
   )
 }

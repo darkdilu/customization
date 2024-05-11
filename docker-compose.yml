@@ -2,6 +2,7 @@ version: '3'
 services:
   backend:
     build: ./server
+    image: dilus1322747/backend
     restart: always
     container_name: node-api1
     ports:
@@ -15,6 +16,7 @@ services:
 
   frontend:
     build: ./client
+    image: dilus1322747/frontend
     container_name: react-ui1
     ports:
       - "3000:3000"

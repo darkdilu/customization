@@ -6,6 +6,10 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import CanvasDownload2 from './components/circle';
 import ImageRotator from './components/triangle';
 import Image_backend from './components/triangle';
+import Model_save from './components/model_save';
+import UploadImage from './components/upload';
+
+
 const ImageContext = createContext();
 
 export const useImage = () => useContext(ImageContext);
@@ -29,7 +33,8 @@ function App() {
           <Route exact path="/circle" element={<CanvasDownload2/>} />
           <Route exact path="/rotation" element={<ImageRotator/>} />
           <Route exact path="/backend" element={<Image_backend/>} />
-         
+          <Route exact path="/model_save" element={<Model_save/>} />
+          <Route exact path="/upload_image" element={<UploadImage/>} />
            </Routes>   
     </Router>
  

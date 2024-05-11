@@ -4,7 +4,11 @@ import style from './material.module.css'
 import { Context19, Context5 } from './canvas';
 import axios from 'axios';
 
-function Material_input() {
+function Material_input({model_choose}) {
+
+
+
+
     const [material_name, setMaterialName] = useState([]);
 const [part_selected,setPart_selected]= useContext(Context19)
     useEffect(() => {
@@ -52,20 +56,61 @@ const [part_selected,setPart_selected]= useContext(Context19)
                         </ul>
                     </div>
                 )}
-                <b>/</b>&nbsp;&nbsp;
-                <b onClick={(event) => {
-    setPart_selected("Upper Skirt"); // Setting a string directly
-}}>
-    Upper Skirt
-</b>&nbsp;&nbsp;
-                <b>/</b>&nbsp;&nbsp;
-                <b onClick={(event) => {
-    setPart_selected("Lower Skirt"); // Setting a string directly
-}}>
-    Lower Skirt
-</b>
 
-                &nbsp;&nbsp;
+{model_choose ==="Skirt" && (
+    <>
+        <b>/</b>&nbsp;&nbsp;
+        <b onClick={(event) => {
+            setPart_selected("Upper Skirt"); // Setting a string directly
+        }}>
+            Upper Skirt
+        </b>&nbsp;&nbsp;
+        <b>/</b>&nbsp;&nbsp;
+        <b onClick={(event) => {
+            setPart_selected("Lower Skirt"); // Setting a string directly
+        }}>
+            Lower Skirt
+        </b>
+
+        &nbsp;&nbsp;
+    </>
+)}
+
+
+
+
+{model_choose ==="shirt" && (
+    <>
+        <b>/</b>&nbsp;&nbsp;
+        <b onClick={(event) => {
+            setPart_selected("F"); // Setting a string directly
+        }}>
+            Fronted Shirt
+        </b>&nbsp;&nbsp;
+        <b>/</b>&nbsp;&nbsp;
+        <b onClick={(event) => {
+            setPart_selected("Back Shirt"); // Setting a string directly
+        }}>
+            Back Shirt
+        </b>
+        &nbsp;&nbsp;
+        <b>/</b>&nbsp;&nbsp;
+
+        <b onClick={(event) => {
+            setPart_selected("Back Pieces"); // Setting a string directly
+        }}>
+            Back Pieces
+        </b>
+
+
+        &nbsp;&nbsp;
+    </>
+)}
+
+
+
+
+
             </div>
         </>
     );
