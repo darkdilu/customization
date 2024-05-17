@@ -11,10 +11,12 @@ const UploadImage = () => {
 
   const handleUpload = async () => {
     const formData = new FormData();
+    
     formData.append('image', image);
-
+    console.log(formData)
     try {
-      const response = await axios.post('http://127.0.0.1:5000/upload', formData, {
+      //http://127.0.0.1:5000/upload
+      const response = await axios.post('http://13.201.251.105:6000/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -29,8 +31,8 @@ const UploadImage = () => {
 
   const handleDownload = async () => {
     try {
-      // Send GET request to download the processed image
-      const response = await axios.get('http://127.0.0.1:5000/proccessed_image', {
+      // Send GET request to download the processed image  http://127.0.0.1:8080/proccessed_image
+      const response = await axios.get('http://13.201.251.105:6000/proccessed_image', {
         responseType: 'blob' 
         
       });

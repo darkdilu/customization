@@ -8,3 +8,20 @@
     color: white;
     font-size: larger;
     }
+
+.image{
+
+
+width: 30px;
+height: 30px;
+
+}    
+
+.image_list{
+
+    list-style-type: none;
+    position: relative;
+    left: 0;
+    top: 30px;
+
+}

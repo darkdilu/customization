@@ -19,8 +19,8 @@ app.use(express.static('public'));
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-// mongoose.connect('mongodb://localhost:27017/Image1'   
-mongoose.connect('mongodb://mongo-db1', {
+//mongoose.connect('mongodb://mongo-db1' mongoose.connect('mongodb://localhost:27017/Image1'   
+mongoose.connect('mongodb://localhost:27017/Image1', {
     
     serverSelectionTimeoutMS: 30000, // 30 seconds
 }).then(() => {
@@ -85,26 +85,33 @@ app.post('/delete', (req, res) => {
         });
 });
 
-app.post('/images', upload.single('image'), (req, res, next) => {
+{/*app.post('/images', upload.single('image'), (req, res, next) => {  */}
+app.post('/images',  (req, res) => {
+    // Check if image data exists in the request body
+    if (!req.body.image) {
+        return res.status(400).json({ error: 'No image data provided' });
+    }
+
+    // Construct the image object to be saved in MongoDB
     var obj = new image_model({
         name: req.body.name,
         desc: req.body.desc,
         img: {
-            data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
-            contentType: 'image/png'
+            data: req.body.image, // Assuming req.body.image contains base64 encoded image data
+            contentType: req.body.contentType // Assuming req.body.contentType contains the content type of the image
         }
     });
+
+    // Save the image object to MongoDB
     obj.save()
         .then((item) => {
-            res.redirect('/');
+            res.status(201).json({ message: 'Image uploaded successfully'});
         })
         .catch(err => {
             console.error("Error saving image:", err);
             res.status(500).send("Error saving image");
         });
 });
-
-
 app.post('/upload_file', upload.single('model'), (req, res) => {
     if (!req.file) {
       return res.status(400).send('No files were uploaded.');
@@ -114,7 +121,7 @@ app.post('/upload_file', upload.single('model'), (req, res) => {
     const filePath = req.file.path;
     const originalName = req.file.originalname;
   
-    // Move the uploaded file to a permanent location
+
     const newFilePath = path.join(__dirname, 'models', originalName);
     fs.renameSync(filePath, newFilePath);
   

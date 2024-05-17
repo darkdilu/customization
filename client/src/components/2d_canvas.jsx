@@ -1,10 +1,14 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
 import tshirtImage from '../../public/front2_tshirt.webp';
-import { Context12, Context13, Context18, Context8, Context9 } from './canvas';
+import { Context12, Context13, Context18, Context20, Context21, Context8, Context9 } from './canvas';
 import style from './2d_canvas.module.css';
 import left from '../../public/left_side_black.png'
 import right from '../../public/right side.png'
 import logo from '../../public/Upload-icon.svg'
+import { context } from '@react-three/fiber';
+
+
+
 function CanvasImageUploader() {
 
 
@@ -28,6 +32,9 @@ const[back_position,setBack_position]=useContext(Context18);
 
 const[back_side_image,setBack_side_image]=useContext(Context13)
 
+const[right_position,setRight_position]=useContext(Context20)
+
+const[right_image_pos, setRight_image]=useContext(Context21)
 
 const[tshirt_image_side,setTshirt_image_side]=useContext(Context12)
 
@@ -123,6 +130,43 @@ const[tshirt_image_side,setTshirt_image_side]=useContext(Context12)
 
 
 
+  if(tshirt_image_side=='right_side'){
+   
+    const files = event.target.files;
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        const image = new Image();
+      setRight_image((prevImages) => [...prevImages, reader.result]);
+
+        image.src = event.target.result;
+        image.onload = () => {
+          const maxWidth = 50;
+          const maxHeight = 50;
+          let aspectRatio = 1;
+          if (image.width > maxWidth || image.height > maxHeight) {
+            aspectRatio = Math.min(maxWidth / image.width, maxHeight / image.height);
+          }
+          const scaledWidth = image.width * aspectRatio;
+          const scaledHeight = image.height * aspectRatio;
+
+          setImages((prevImages) => [...prevImages, { image, x: 0, y: 0, width: scaledWidth, height: scaledHeight }]);
+          setImagePositions((prevPositions) => [...prevPositions, { x: 0, y: 0 }]);
+          redrawCanvas();
+        };
+
+        
+      };
+
+      reader.readAsDataURL(file);
+    }
+  }
+
+
+
 
   };
 
@@ -189,7 +233,19 @@ if(tshirt_image_side=='front_side'){
     });
   }
 
+  if(tshirt_image_side=='right_side'){
 
+    setRight_position((prevDecalPosition) => {
+      const updatedDecalPosition = [...prevDecalPosition];
+      updatedDecalPosition[index] = { 
+        x: newUpdateXValue, 
+        y: newUpdateYValue, 
+        z: prevDecalPosition[index]?.z || 0.15 
+      };
+      setRight_position(updatedDecalPosition);
+      return updatedDecalPosition;
+    });
+  }
 
 
   };
@@ -223,14 +279,14 @@ if(tshirt_image_side=='front_side'){
       //console.log(`the x update is ${updatedX}`)
 
      // updatedX = Math.min(0.12005912, Math.max(-0.2029292, updatedX));
-     const newUpdateXValue = (((x+320) - rect.left) /(rect.width+400))-0.02
+     const newUpdateXValue = (((x+320) - rect.left) /(rect.width+400))+0.02
 
      // setUpdateXValue(newUpdateXValue);
   
       // Update the y value dynamically based on mouse movement
      // const newUpdateYValue = (offsetY - rect.top) / rect.height - 1.5;
 
-     const newUpdateYValue = - (((y-20 ) - rect.top) / (rect.height+270)) +0.09;
+     const newUpdateYValue = - (((y-840 ) - rect.top) / (rect.height+270)) +0.15;
  
    
     
@@ -264,14 +320,14 @@ if(tshirt_image_side=='front_side'){
         //console.log(`the x update is ${updatedX}`)
   
        // updatedX = Math.min(0.12005912, Math.max(-0.2029292, updatedX));
-       const newUpdateXValue = (((x+320) - rect.left) /(rect.width+400))-0.02
+       const newUpdateXValue = -(((x+320) - rect.left) /(rect.width+400))+0.02
   
        // setUpdateXValue(newUpdateXValue);
     
         // Update the y value dynamically based on mouse movement
        // const newUpdateYValue = (offsetY - rect.top) / rect.height - 1.5;
   
-       const newUpdateYValue = - (((y-20 ) - rect.top) / (rect.height+270)) +0.09;
+       const newUpdateYValue = - (((y-840 ) - rect.top) / (rect.height+270)) +0.15;
    
      
       
@@ -285,7 +341,47 @@ if(tshirt_image_side=='front_side'){
        updateImagePosition(index, x, y, newUpdateXValue,newUpdateYValue);
       });}
   
+      if(tshirt_image_side=='right_side'){
 
+        images.forEach(({ image, x, y, width, height }, index) => {
+          
+          context.drawImage(image, x, y, width, height);
+    
+    
+    
+          const rect = canvasRef.current.getBoundingClientRect();
+          
+       //   let updatedX = newUpdateXValue
+       
+    
+    //console.log(`the update x is ${updateXValue}`)
+    
+    
+    
+          //console.log(`the x update is ${updatedX}`)
+    
+         // updatedX = Math.min(0.12005912, Math.max(-0.2029292, updatedX));
+         const newUpdateXValue = -(((x+320) - rect.left) /(rect.width+400))+0.02
+    
+         // setUpdateXValue(newUpdateXValue);
+      
+          // Update the y value dynamically based on mouse movement
+         // const newUpdateYValue = (offsetY - rect.top) / rect.height - 1.5;
+    
+         const newUpdateYValue = - (((y-840 ) - rect.top) / (rect.height+270)) +0.15;
+     
+       
+        
+    
+         console.log(`the y update is ${updateYValue}`)
+    
+    // letupdatedY=newUpdateYValue
+    
+         // updateImagePosition(index, x, y,updatedX,updatedY);
+      //   updateXValue
+         updateImagePosition(index, x, y, newUpdateXValue,newUpdateYValue);
+        });}
+    
 
 
 

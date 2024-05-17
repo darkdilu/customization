@@ -51,7 +51,8 @@ const[iamge_backend,setBackend_image]=useState()
 
   const fetchImages = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/send_image');
+      //const response = await axios.get('http://13.201.251.105/:5000/send_image'); http://localhost:5000/send_image
+      const response = await axios.get('http://13.201.251.105/:5000/send_image');
       setImages(response.data);
     } catch (error) {
       console.error('Error fetching images:', error);
@@ -82,7 +83,7 @@ const[iamge_backend,setBackend_image]=useState()
 
   const { nodes, materials } = useGLTF('/shirt_model1.glb')
   return (
-    <group {...props} dispose={null}>
+    <group {...props} dispose={null} scale={[0.75,0.75,0.75]}>
 
 
 <mesh geometry={nodes.Cloth_mesh.geometry} material={materials.Cotton_Heavy_Canvas_349049} >
@@ -128,7 +129,7 @@ const[iamge_backend,setBackend_image]=useState()
 
 {/* back collor */}
 
-      <mesh geometry={nodes.Cloth_mesh_10.geometry} material={materials['Cotton_Heavy_Canvas_349049.003']} >
+      <mesh geometry={nodes.Cloth_mesh_10.geometry}  material={materials['Cotton_Heavy_Canvas_349049.003']} >
       {/*<meshStandardMaterial {...textureprops} /> */}
 
         </mesh>

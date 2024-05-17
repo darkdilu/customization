@@ -58,7 +58,8 @@ export default function Model(props) {
 
   const fetchImages = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/send_image');
+      //const response = await axios.get('http://13.201.251.105/:5000/send_image');http://localhost:5000/send_image
+      const response = await axios.get('http://13.201.251.105:5000/send_image');
       setImages(response.data);
     } catch (error) {
       console.error('Error fetching images:', error);
@@ -89,7 +90,7 @@ const selected_part=props.part_selected
   const { nodes, materials } = useGLTF('/poncho.glb')
   return (
     
-    <group  ref={groupRef}  {...props} dispose={null}>
+    <group  ref={groupRef}  {...props} dispose={null} scale={[0.60, 0.60, 0.60]}>
 
       <mesh geometry={nodes.Cloth_mesh.geometry} material={materials.Rib_2X2_468gsm_263076} />
 

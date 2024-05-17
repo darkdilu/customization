@@ -16,6 +16,9 @@ function Model_choose() {
           <option value="Tshirt">Tshirt</option>
           <option value="Skirt">Skirt</option>
           <option value="shirt">Shirt</option>
+          <option value="second_shirt">Second Shirt</option>
+          <option value="crop_top">Crop Top</option>
+        {/*  <option value="tshirt_2">Second Tshirt</option> */}
         </select>
       </div>
     </>

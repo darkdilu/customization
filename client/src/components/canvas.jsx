@@ -15,6 +15,13 @@ import Model_choose from "./models_choose";
 
 import Shirt_model1 from '../../public/Shirt_model1'
 
+
+import Tshirt_2 from '../../public/Leander_tshirt_decal'
+
+import Crop_top from '../../public/Crop_top'
+
+import Second_shirt from '../../public/Basic_shirt_2'
+
 export const Context = React.createContext();
 export const Context1 = React.createContext();
 export const Context2 = React.createContext();
@@ -35,6 +42,12 @@ export const Context16=React.createContext();
 export const Context17=React.createContext();
 export const Context18=React.createContext();
 export const Context19=React.createContext();
+export const Context20=React.createContext();
+
+
+export const Context21=React.createContext();
+export const Context22=React.createContext();
+
 
 function Canvas1(props) {
   const [showdisplay, setShowdisplay] = useState(false);
@@ -79,7 +92,7 @@ const[tshirt_image_side,setTshirt_image_side]=useState("front_side")
 
 const[back_position,setBack_position]=useState([])
 
-
+const[right_position,setRight_position]=useState([])
 
 
 
@@ -94,7 +107,8 @@ const handleSaveClick = async () => {
       formData.append('model', blob1, 'model1.gltf');
     
       try {
-        const response = await fetch('http://localhost:5000/upload_file', {
+       // const response = await fetch('http://13.201.251.105/:5000/upload_file'   const response = await fetch('http://localhost:5000/upload_file'
+       const response = await fetch('http://13.201.251.105/:5000/upload_file'    , {
           method: 'POST',
           body: formData,
         });
@@ -179,14 +193,25 @@ const handleSaveClick = async () => {
 <Context17.Provider value={[model_choose,setModel_choose]}>
   <Context18.Provider value={[back_position,setBack_position]}>
 <Context19.Provider value={[part_selected,setPart_selected]}>
-                        {showdisplay && (
+  <Context20.Provider value={[right_position,setRight_position]}>
+    <Context21.Provider value={[right_image, setRight_image]}>
+      <Context22.Provider value={[left_image, setLeft_image]}>
+                        {!showdisplay && (
                           <div className={style.app}>
-                            <div className={style.canvas_style} style={{ width: "50vw", height: "50vh" }}>
+                            <div className={style.canvas_style} style={{ width: "60vw", height: "60vh" }}>
+
+
+                            <div>
+<Model_choose/>
+
+</div>
+
+
+
                             <Canvas
-  size={['2000px', '3000px']}
+
   className={style.canvas}
-  width={500}
-  height={1000}
+  
   ref={canvasRef}
   onMouseMove={decal_selected ? handleCanvasMouseMove : text_selected ? handleMouseMove : null}
   onMouseUp={decal_selected ? handleCanvasMouseUp : text_selected ? handleMouseDown3 : null}
@@ -202,7 +227,7 @@ const handleSaveClick = async () => {
   <PresentationControls
     speed={4}
     global
-    polar={[0.1, 0,1]}
+    polar={[0.4, 0,1]}
   >
     <mesh rotation={[-Math.PI / 2, 0, 0]} position-y={-2.5}>
       <planeGeometry args={[300, 300]} />
@@ -236,7 +261,19 @@ const handleSaveClick = async () => {
 
 
 
-   
+     {model_choose === "second_shirt"&&(
+
+
+<>
+<Second_shirt
+
+
+/>
+
+
+</>
+
+    )}
      
 
      {model_choose === 'Skirt' && (
@@ -245,13 +282,14 @@ const handleSaveClick = async () => {
 
 
     <Poncho
-      color={color}
+      
       material={material}
       front_image={front_image}
       back_image={back_image}
       position1={decalPosition}
       image_side={tshirt_image_side}
       part_selected={part_selected}
+      position={[0,-0.70,0]}
     />
     {console.log("model set is Skirt")}
   </>
@@ -259,14 +297,17 @@ const handleSaveClick = async () => {
        
        {model_choose === 'Tshirt' && (
         <>
-      <New_shirt3 
-        color={color}
+      <Tshirt_2
+       
         material={material}
         front_image={front_image}
         back_image={back_image}
+        right_image={right_image}
         position1={decalPosition}
         image_side={tshirt_image_side}
         back_position={back_position}
+        right_position={right_position}
+        
       />
   {console.log("model set is Tshirt")}
   
@@ -276,9 +317,11 @@ const handleSaveClick = async () => {
 {model_choose === 'shirt' && (
         <>
       <Shirt_model1 
-        color={color}
+       
         material={material}
         part_selected={part_selected}
+
+        position={[0,-1,0]}
       />
   {console.log("model set is Tshirt")}
   
@@ -286,8 +329,47 @@ const handleSaveClick = async () => {
     )}
 
 
+    {model_choose === "crop_top"&&(
 
 
+<>
+<Crop_top 
+
+position={[0,-1.4,0]}
+
+/>
+ 
+
+</>
+
+    )}
+
+
+
+
+
+{/* model_choose === "tshirt_2"&&(
+
+
+<>
+<Tshirt_2
+
+material={material}
+front_image={front_image}
+back_image={back_image}
+position1={decalPosition}
+image_side={tshirt_image_side}
+back_position={back_position}
+
+
+position={[0,-0.95,0]}
+
+/>
+ 
+
+</>
+
+    ) */}
 
 
 
@@ -312,7 +394,7 @@ style={{ position: 'absolute', left: '-9999px' }}
 
 
     <Poncho
-      color={color}
+   
       material={material}
     
      
@@ -324,14 +406,16 @@ style={{ position: 'absolute', left: '-9999px' }}
        
        {model_choose === 'Tshirt' && (
         <>
-      <New_shirt3 
-        color={color}
+      <Tshirt_2
+      
         material={material}
         front_image={front_image}
         back_image={back_image}
         position1={decalPosition}
         image_side={tshirt_image_side}
         back_position={back_position}
+        right_image={right_image}
+        right_position={right_position}
       />
   {console.log("model set is Tshirt")}
   
@@ -341,7 +425,7 @@ style={{ position: 'absolute', left: '-9999px' }}
 {model_choose === 'shirt' && (
         <>
       <Shirt_model1 
-        color={color}
+     
         material={material}
         part_selected={part_selected}
       />
@@ -351,6 +435,52 @@ style={{ position: 'absolute', left: '-9999px' }}
     )}
 
 
+
+{model_choose === "crop_top"&&(
+
+
+<>
+<Crop_top/>
+
+
+</>
+
+    )}
+
+{model_choose === "second_shirt"&&(
+
+
+<>
+<Second_shirt/>
+position={[0,2,0]}
+
+</>
+
+    )}
+
+
+{/*model_choose === "tshirt_2"&&(
+
+
+<>
+<Tshirt_2
+
+material={material}
+front_image={front_image}
+back_image={back_image}
+position1={decalPosition}
+image_side={tshirt_image_side}
+back_position={back_position}
+
+
+position={[0,-1.2,0]}
+
+/>
+ 
+
+</>
+
+    )*/}
 
 </Canvas>
 
@@ -367,10 +497,10 @@ style={{ position: 'absolute', left: '-9999px' }}
 )) */}
 
 </div>
-
+ 
 
                               <div className={style.customization}>
-                              
+                              {/*
                                 <div className={style.color_container}>
                                   <h2 className={style.shirt_color}>shirt color</h2>
                                   <input type="button" className={style.shirt} onClick={(e) => setColor("yellow")} />
@@ -383,6 +513,9 @@ style={{ position: 'absolute', left: '-9999px' }}
                                   <input type="button" id="mesh" name="vest" className={style.shirt6} onClick={(e) => setColor("grey")} />
                                   <input type="button" id="mesh" name="vest" className={style.shirt7} onClick={(e) => setColor("white")} />
                                 </div>
+
+
+                                */}
                                  {/*  <button onClick={(e) => setDlt((prevState) => !prevState)}>Hide</button> */}
                               
                               
@@ -396,19 +529,25 @@ style={{ position: 'absolute', left: '-9999px' }}
                           </div>
                         )}
 
-<div>
-<Model_choose/>
-
-</div>
-
                      
-                        <button onClick={() => setShowdisplay(prevState => !prevState)} className={style.button}>convert 3d</button> 
-                         {!showdisplay && (
+<button 
+  onClick={() => {
+    setShowdisplay(prevState => !prevState);
+    setModel_choose("Tshirt");
+  }} 
+  className={style.button}
+>
+  2d Tshirt
+</button>
+                         {showdisplay && (
                           <CanvasImageUploader/>
                         )}
 
 
 <button onClick={handleSaveClick}>Save Model</button> 
+</Context22.Provider>
+</Context21.Provider>
+</Context20.Provider>
                         </Context19.Provider>
 </Context18.Provider>
 </Context17.Provider>
