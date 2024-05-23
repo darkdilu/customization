@@ -20,7 +20,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 //mongoose.connect('mongodb://mongo-db1' mongoose.connect('mongodb://localhost:27017/Image1'   
-mongoose.connect('mongodb://localhost:27017/Image1', {
+mongoose.connect('mongodb://mongo-db1', {
     
     serverSelectionTimeoutMS: 30000, // 30 seconds
 }).then(() => {
@@ -85,27 +85,19 @@ app.post('/delete', (req, res) => {
         });
 });
 
-{/*app.post('/images', upload.single('image'), (req, res, next) => {  */}
-app.post('/images',  (req, res) => {
-    // Check if image data exists in the request body
-    if (!req.body.image) {
-        return res.status(400).json({ error: 'No image data provided' });
-    }
-
-    // Construct the image object to be saved in MongoDB
+{/*app.post('/images', upload.single('image'), (req, res, next) => {     app.post('/images',  (req, res) => */}
+app.post('/images', upload.single('image'), (req, res, next) => {
     var obj = new image_model({
         name: req.body.name,
         desc: req.body.desc,
         img: {
-            data: req.body.image, // Assuming req.body.image contains base64 encoded image data
-            contentType: req.body.contentType // Assuming req.body.contentType contains the content type of the image
+            data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
+            contentType: 'image/png'
         }
     });
-
-    // Save the image object to MongoDB
     obj.save()
         .then((item) => {
-            res.status(201).json({ message: 'Image uploaded successfully'});
+            res.redirect('/');
         })
         .catch(err => {
             console.error("Error saving image:", err);

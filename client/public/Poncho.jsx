@@ -29,6 +29,8 @@ export default function Model(props) {
 
   const[iamge_backend,setBackend_image]=useState()
 
+  const[iamge_backend2,setBackend_image2]=useState()
+
     const [images, setImages] = useState([]);
 
 
@@ -47,11 +49,16 @@ export default function Model(props) {
   useEffect(() => {
       const material = props.material; 
       images.forEach((image) => {
-          if (material === image.name) {
+          if (material === image.name  && selected_part === "Upper Skirt") {
               console.log(image.name)
               let source = `data:image/${image.img.contentType};base64,${Buffer.from(image.img.data).toString('base64')}`
               setBackend_image(source);
           }
+          if (material === image.name  && selected_part === "Lower Skirt") {
+            console.log(image.name)
+            let source = `data:image/${image.img.contentType};base64,${Buffer.from(image.img.data).toString('base64')}`
+            setBackend_image2(source);
+        }
       });
   }, [props.material, images]); 
 
@@ -59,7 +66,7 @@ export default function Model(props) {
   const fetchImages = async () => {
     try {
       //const response = await axios.get('http://13.201.251.105/:5000/send_image');http://localhost:5000/send_image
-      const response = await axios.get('http://13.201.251.105:5000/send_image');
+      const response = await axios.get('http://13.201.251.105/:5000/send_image');
       setImages(response.data);
     } catch (error) {
       console.error('Error fetching images:', error);
@@ -70,12 +77,19 @@ export default function Model(props) {
 
 
   let textureprops
+  let texture
   if (iamge_backend) {
       textureprops = useTexture({
           map: iamge_backend,
       });
   }
 
+
+  else if (iamge_backend2) {
+    textureprops2 = useTexture({
+        map: iamge_backend,
+    });
+}
   else {
 
       textureprops = useTexture({
@@ -174,7 +188,7 @@ const selected_part=props.part_selected
         <mesh geometry={nodes.Cloth_mesh_28.geometry} material={materials.Sherpa_Shearling_Curly_Fleece_Poly_360gsm_266284} >
 
         {selected_part === "Lower Skirt" && (
-        <meshStandardMaterial {...textureprops} />
+        <meshStandardMaterial {...textureprops2} />
     )}
     
         </mesh>

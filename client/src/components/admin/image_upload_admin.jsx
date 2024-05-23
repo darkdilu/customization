@@ -12,9 +12,9 @@ function Admin_image_upload() {
     e.preventDefault();
 
    
-//http://13.201.251.105:5000/images
+//http://13.201.251.105:5000/images http://127.0.0.1:5000/images
     try {
-      const response = await axios.post('http://127.0.0.1:5000/images', formData, {
+      const response = await axios.post('http://13.201.251.105:5000/images', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

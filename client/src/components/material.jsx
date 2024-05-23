@@ -15,7 +15,7 @@ function Material_input({ model_choose }) {
     const fetchMaterialData = async () => {
         try {
             //http://localhost:5000/send_image http://13.201.251.105:5000/send_image
-            const response = await axios.get('http://localhost:5000/send_image');
+            const response = await axios.get('http://13.201.251.105:5000/send_image');
             setMaterialData(response.data);
         } catch (error) {
             console.error('Error fetching material data:', error);
@@ -91,6 +91,44 @@ function Material_input({ model_choose }) {
                         &nbsp;&nbsp;
                     </>
                 )}
+
+
+
+{model_choose === "crop_top" && (
+                    <>
+                        <b>/</b>&nbsp;&nbsp;
+                        <b onClick={(event) => {
+                            setPart_selected("Front Part");
+                        }}>
+                            Front part
+                        </b>&nbsp;&nbsp;
+                        <b>/</b>&nbsp;&nbsp;
+                        <b onClick={(event) => {
+                            setPart_selected("Back Part");
+                        }}>
+                            Back Part
+                        </b>
+                        &nbsp;&nbsp;
+                        <b>/</b>&nbsp;&nbsp;
+                        <b onClick={(event) => {
+                            setPart_selected("Rigt Hand");
+                        }}>
+                            Right Hand
+                        </b>
+                        &nbsp;&nbsp;
+                        
+                        <b>/</b>&nbsp;&nbsp;
+                        <b onClick={(event) => {
+                            setPart_selected("Left Hand");
+                        }}>
+                            Left Hand
+                        </b>
+                        &nbsp;&nbsp;
+                    </>
+                )}
+
+
+
             </div>
         </>
     );

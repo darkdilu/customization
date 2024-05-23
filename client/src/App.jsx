@@ -9,6 +9,7 @@ import Image_backend from './components/triangle';
 import Model_save from './components/model_save';
 import UploadImage from './components/upload';
 import Admin_image_upload from './components/admin/image_upload_admin';
+import Testing from './components/testing';
 
 
 const ImageContext = createContext();
@@ -36,7 +37,8 @@ function App() {
           <Route exact path="/backend" element={<Image_backend/>} />
           <Route exact path="/model_save" element={<Model_save/>} />
           <Route exact path="/upload_image" element={<UploadImage/>} />
-
+          <Route exact path="/testing" element={<Testing/>} />
+          
           <Route exact path='/admin_image_upload' element={<Admin_image_upload/>}/>
 
            </Routes>   

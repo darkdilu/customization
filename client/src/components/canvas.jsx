@@ -3,10 +3,10 @@ import React, { Suspense, useEffect, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { ContactShadows, Float, MeshReflectorMaterial, OrbitControls, PresentationControls, Stage } from "@react-three/drei";
 import style from "./canvas.module.css";
-
+import * as THREE from 'three';
 import shirt_2d from '../../public/2d_t-shirt.png'
 import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter';
-
+import goku from '../../public/garage.jpg'
 import Material_input from "./material";
 import Poncho from '../../public/Poncho'
 import CanvasImageUploader from "./2d_canvas";
@@ -16,9 +16,12 @@ import Model_choose from "./models_choose";
 import Shirt_model1 from '../../public/Shirt_model1'
 
 
-import Tshirt_2 from '../../public/Leander_tshirt_decal'
+import Testing from '../../public/testing'
 
-import Crop_top from '../../public/Crop_top'
+
+import Tshirt_2 from '../../public/New_muzamill_tshirt'
+
+import Crop_top from '../../public/Crop_top_leo'
 
 import Second_shirt from '../../public/Basic_shirt_2'
 
@@ -61,7 +64,7 @@ function Canvas1(props) {
   const [decal_selected, setDecal_selected] = useState(false);
   const [canvasScene, setCanvasScene] = useState(null);
 
-const[model_choose,setModel_choose]=useState("Tshirt")
+const[model_choose,setModel_choose]=useState("Skirt")
 
 
   const [decalPosition, setDecalPosition] = useState([]);
@@ -126,6 +129,25 @@ const handleSaveClick = async () => {
   }
 };
 
+
+
+const ThreeScene = () => {
+  useEffect(() => {
+
+    const scene = new THREE.Scene();
+
+
+    const textureLoader = new THREE.TextureLoader();
+    const texture = textureLoader.load(goku);
+    scene.background = texture;
+
+
+
+  
+  }, []);
+
+  return null;
+};
 
 
 
@@ -227,7 +249,7 @@ const handleSaveClick = async () => {
   <PresentationControls
     speed={4}
     global
-    polar={[0.4, 0,1]}
+    polar={[0.4, 0,0]}
   >
     <mesh rotation={[-Math.PI / 2, 0, 0]} position-y={-2.5}>
       <planeGeometry args={[300, 300]} />
@@ -257,24 +279,17 @@ const handleSaveClick = async () => {
     />
     <ambientLight />
     <Suspense fallback={null}>
-     <Stage environment="city" intensity={0.6} castShadow={false}> 
+      <Stage   environment="city" intensity={0.6} castShadow={false}  > 
 
 
 
-     {model_choose === "second_shirt"&&(
-
-
-<>
-<Second_shirt
-
-
-/>
-
-
-</>
-
-    )}
-     
+     {model_choose === "second_shirt" && (
+    <>
+        <Second_shirt
+        position={[0,-1,0]} /> 
+        {/* <Testing/>*/}
+    </>
+)}
 
      {model_choose === 'Skirt' && (
   <>
@@ -284,10 +299,10 @@ const handleSaveClick = async () => {
     <Poncho
       
       material={material}
-      front_image={front_image}
-      back_image={back_image}
-      position1={decalPosition}
-      image_side={tshirt_image_side}
+     
+   
+      
+     
       part_selected={part_selected}
       position={[0,-0.70,0]}
     />
@@ -307,6 +322,7 @@ const handleSaveClick = async () => {
         image_side={tshirt_image_side}
         back_position={back_position}
         right_position={right_position}
+        position={[0,-1.3,0]}
         
       />
   {console.log("model set is Tshirt")}
@@ -334,6 +350,14 @@ const handleSaveClick = async () => {
 
 <>
 <Crop_top 
+
+
+material={material}
+     
+   
+      
+     
+part_selected={part_selected}
 
 position={[0,-1.4,0]}
 
@@ -373,7 +397,7 @@ position={[0,-0.95,0]}
 
 
 
-        </Stage> 
+      </Stage> 
     </Suspense>
     <pointLight position={[15, 25, 15]} />
    
@@ -416,6 +440,7 @@ style={{ position: 'absolute', left: '-9999px' }}
         back_position={back_position}
         right_image={right_image}
         right_position={right_position}
+        position={[0,-1.3,0]}
       />
   {console.log("model set is Tshirt")}
   
@@ -440,7 +465,13 @@ style={{ position: 'absolute', left: '-9999px' }}
 
 
 <>
-<Crop_top/>
+<Crop_top
+
+material={material}
+     
+part_selected={part_selected}
+
+/>
 
 
 </>
